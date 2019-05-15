@@ -13,11 +13,15 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.ydhnwb.knowsit.fragments.FragmentHome;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private static boolean openFirst = true;
     private static int navStatus = -1;
-
+    private Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        } else { super.onBackPressed(); }
     }
 
     @Override
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -74,19 +75,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        switch (id){
+            case R.id.nav_home :
+                if (navStatus == 0 && !openFirst){ drawer.closeDrawer(GravityCompat.START);
+                }else{
+                    navStatus = 0;
+                    openFirst = false;
+                    fragment = new FragmentHome();
+                }
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            case R.id.nav_gallery :
+                if(navStatus == 1 && !openFirst){ drawer.closeDrawer(GravityCompat.START);
+                }else{
+                    navStatus = 1;
+                    openFirst = false;
+                    fragment = new FragmentHome();
+                }
 
-        } else if (id == R.id.nav_slideshow) {
+            default:
+                navStatus = 0;
+                openFirst = false;
+                fragment = new FragmentHome();
+        }
 
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if(fragment != null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.screen_container, fragment);
+            fragmentTransaction.commit();
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -14,4 +14,10 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="menu_mytask">My schedule</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="login_header">Please login</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet consectuer. Lorem ipsum dolor sit amet consectuer. Lorem ipsum dolor sit amet consectuer. Lorem ipsum dolor sit amet consectuer</string>
+    <string name="nim">Enter your nim</string>
+    <string name="password">Enter your password</string>
+    <string name="login">Login</string>
 </resources>
