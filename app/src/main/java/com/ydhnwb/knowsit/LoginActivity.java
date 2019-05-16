@@ -50,15 +50,22 @@ public class LoginActivity extends AppCompatActivity {
                     databaseReference.orderByChild("nim").equalTo(_nim).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            StudentModel student = dataSnapshot.getValue(StudentModel.class);
-                            firebaseAuth.signInWithEmailAndPassword(student.getEmail(), _password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(LoginActivity.this, "Login berhasil", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
+                            if(dataSnapshot.exists()){
+                                String email = "";
+                                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                    email = ds.child("email").getValue(String.class);
                                 }
-                            });
+                                Toast.makeText(LoginActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, email, Toast.LENGTH_SHORT).show();
+                                firebaseAuth.signInWithEmailAndPassword(email, _password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                    @Override
+                                    public void onSuccess(AuthResult authResult) {
+                                        Toast.makeText(LoginActivity.this, "Login berhasil", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    }
+                                });
+                            }
                         }
 
                         @Override

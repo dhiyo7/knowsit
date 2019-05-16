@@ -142,4 +142,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        listenerAuth(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        listenerAuth(false);
+    }
 }

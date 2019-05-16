@@ -2,7 +2,6 @@ package com.ydhnwb.knowsit.models;
 
 public class StudentModel {
     private String nim;
-    private String password;
     private String email;
     private String name;
     private String key;
@@ -10,9 +9,8 @@ public class StudentModel {
 
     public StudentModel() { }
 
-    public StudentModel(String nim, String password, String email, String name, String key, int semester) {
+    public StudentModel(String nim, String email, String name, String key, int semester) {
         this.nim = nim;
-        this.password = password;
         this.email = email;
         this.name = name;
         this.key = key;
@@ -25,14 +23,6 @@ public class StudentModel {
 
     public void setNim(String nim) {
         this.nim = nim;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
